@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: dynamic-datasource-demo
+
+server:
+  port: 8080
+
+factory:
+  datasource:
+    # 默认工厂:请求没带工厂编码(或编码未注册)时,回落到这里
+    default-factory: F001
+    factories:
+      F001:
+        url: jdbc:mysql://127.0.0.1:3306/mes_f001?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
+        username: root
+        password: "123456"
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        maximum-pool-size: 10
+        minimum-idle: 2
+      F002:
+        url: jdbc:mysql://127.0.0.1:3306/mes_f002?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8
+        username: root
+        password: "123456"
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        maximum-pool-size: 10
+        minimum-idle: 2
+    # 新工厂(如 F003)不必写在这里:调 POST /api/admin/factories 运行期注册即可
+
+logging:
+  level:
+    com.example.factoryds: debug
